@@ -34,7 +34,7 @@ build: ${SRCS} ${HDRS}
 	${CC} ${SRCS} ${CFLAGS} ${LIBS} -o ${MAIN}.o
 
 run:
-	./${MAIN}.o test-file.csv 0.25
+	./${MAIN}.o output.csv 0.95
 
 clean:
 	@echo #

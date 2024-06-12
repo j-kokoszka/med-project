@@ -163,20 +163,15 @@ void calc_support(transaction_t *transactions, candidate_t *candidate) {
     while(current_transaction) {
         char *transaction_items = current_transaction->items;
         counter = 0;
-        // debug("Current transaction: %s\n", transaction_items);
         while(*transaction_items != '\0') {
             char *set_char = candidate->set;
-            // debug("Current transaction item: %c\n", *transaction_items);
             while(*set_char != '\0') {
                 if(*transaction_items == *set_char) {
                     counter++;
-                    // debug("[%c][%c] Counter increment, %d\n", *transaction_items, *set_char, counter);
                 } else {
-                    // debug("[%c][%c] Not incrementing counter\n", *transaction_items, *set_char);
                 }
                 if (counter == strlen(candidate->set)) {
                     candidate->support++;
-                    // debug("[%s] incrementing support of set length %d. Support: %d\n", candidate->set, strlen(candidate->set), candidate->support);
                     counter = 0;
                     set_char = '\0'; 
                     break;
@@ -313,15 +308,12 @@ void apriori(transaction_t *transactions, float min_support){
     info("Starting apriori algorithm\n");
     candidate_t *prev_candidates = NULL, *candidate_head = NULL;
     candidate_head = join_step(transactions, prev_candidates, min_support);
-    print_candidates(candidate_head);
+    // print_candidates(candidate_head);
     while(candidate_head) {
         prev_candidates = candidate_head;
         candidate_head = join_step(transactions, prev_candidates, min_support);
         
         prune_step(candidate_head, min_support);
-        print_candidates(candidate_head);
-    }
-
-
-    
+        // print_candidates(candidate_head);
+    }   
 }
