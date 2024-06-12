@@ -72,3 +72,12 @@ void free_transactions(transaction_t *head) {
         free(temp);
     }
 }
+
+int count_transactions(transaction_t *head){
+    int counter = 0;
+    while(head) {
+        counter++;
+        head = head->next;
+    }
+    return counter;
+}

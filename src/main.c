@@ -35,11 +35,13 @@ int main(int argc, char *argv[]) {
     else {
         // Process run parameters
         char* filename = argv[1];
-        float min_support = atoi(argv[2]);
+        float support = atof(argv[2]);
 
         // Read test file
         transaction_t *head = create_transaction_list(filename, MAX_TRANSACTION_LENGTH);
-        print_transaction_list(head);
+        // Count min_support from rel support
+        int transaction_count = count_transactions(head);
+        int min_support = (int)(transaction_count*support);
 
         // Measure execution time
         startTime(&timer);

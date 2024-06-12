@@ -31,12 +31,12 @@ all: build run
 build: ${SRCS} ${HDRS}
 	@echo #
 	@echo "-- BUILDING PROGRAM --"
-	${CC} ${SRCS} ${CFLAGS} ${LIBS} -o ${MAIN}
+	${CC} ${SRCS} ${CFLAGS} ${LIBS} -o ${MAIN}.o
 
 run:
-	./${MAIN} test-file.csv 1
+	./${MAIN}.o test-file.csv 0.25
 
 clean:
 	@echo #
 	@echo "-- CLEANING PROJECT FILES --"
-	$(RM) *.o ${MAIN}
+	$(RM) *.o ${MAIN}.o
