@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
 
     if (argc != 3) { usage(); return EXIT_FAILURE; } 
     else {
+        int set_counter = 0;
         // Process run parameters
         char* filename = argv[1];
         float support = atof(argv[2]);
@@ -47,11 +48,13 @@ int main(int argc, char *argv[]) {
         startTime(&timer);
 
         // Run apriori
-        apriori(head, min_support);
+        set_counter = apriori(head, min_support);
         // candidate_t *candidates = first_iteration(head);
 
         stopTime(&timer);
-        printf("\nExecution took %lf [s]\n", elapsedTime(timer));
+        printf("\n");
+        printf("Found %d frequent itemsets.\n", set_counter);
+        printf("Execution took %lf [s]\n", elapsedTime(timer));
 
         // Free the allocated memory for transaction list
         free_transactions(head);

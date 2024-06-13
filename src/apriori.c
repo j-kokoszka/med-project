@@ -6,7 +6,9 @@
 #include <string.h>
 #include <stdarg.h>
 
+// #define DEBUG 1
 
+#ifdef DEBUG
 static void debug(const char *format, ...) {
     fprintf(stderr, "[DEBUG]: ");
     va_list args;
@@ -14,6 +16,7 @@ static void debug(const char *format, ...) {
     vfprintf(stderr, format, args);
     va_end(args);
 }
+#endif
 
 static void info(const char *format, ...) {
     fprintf(stderr, "[INFO]: ");
@@ -36,19 +39,21 @@ void free_candidates(candidate_t *head, int count) {
     }
 }
 
-
-void print_candidates(candidate_t *candidate_head){
+int print_candidates(candidate_t *candidate_head){
     if(candidate_head) {
+        int counter = 0;
         candidate_t *current_candidate = candidate_head;
         while(current_candidate) {
             printf("Candidate set: [%s], candidate support: [%d]\n", current_candidate->set, current_candidate->support);
+            counter++;
             current_candidate = current_candidate->next;
         }
+        return counter;
     } else {
         info("No candidates to print\n");
+        return 0;
     }
-     
-
+     return 0;
 }
 
 candidate_t *create_candidate(char *set_candidate){
@@ -235,17 +240,19 @@ void prune_step(candidate_t *candidate_head, int min_support) {
 }
 
 
-void apriori(transaction_t *transactions, float min_support){
-
+int apriori(transaction_t *transactions, float min_support){
+    int set_counter = 0;
     info("Starting apriori algorithm\n");
     candidate_t *prev_candidates = NULL, *candidate_head = NULL;
     candidate_head = join_step(transactions, prev_candidates, min_support);
-    print_candidates(candidate_head);
+    set_counter+=print_candidates(candidate_head);
     while(candidate_head) {
         prev_candidates = candidate_head;
         candidate_head = join_step(transactions, prev_candidates, min_support);
         
         // prune_step(candidate_head, min_support);
-        print_candidates(candidate_head);
+        set_counter+=print_candidates(candidate_head);
     }   
+
+    return set_counter;
 }

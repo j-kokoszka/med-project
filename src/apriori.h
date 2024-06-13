@@ -12,7 +12,7 @@ typedef struct candidate {
 
 // void test_function();
 
-void apriori(transaction_t *transactions, float min_support);
+int apriori(transaction_t *transactions, float min_support);
 
 // // Iterate over candidates and calculate their support
 // void find_candidates_support(candidate_t *candidates);
