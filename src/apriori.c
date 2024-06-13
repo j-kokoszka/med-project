@@ -88,74 +88,6 @@ int is_in_candidates(candidate_t *candidates, char *set_candidate) {
 }
 
 
-
-// int is_in_candidates(candidate_t *candidates, char *set_candidate) {
-//     int DEBUG_CANDIDATES = 0;
-//     if(strlen(set_candidate)==1){
-//         if(candidates == NULL) {
-//             return 0;
-//         } else {
-//             candidate_t *current_candidate = candidates;
-//             int candidate_counter = 0;
-//             while(current_candidate) {
-//                 candidate_counter++;
-//                 char *items = current_candidate->set;
-//                 int counter = 0;
-
-//                 if(DEBUG_CANDIDATES){debug("[is_in_candidates][%d] Current candidate: %s\n", candidate_counter, items);}
-
-//                 while (*items != '\0') {
-//                     if(DEBUG_CANDIDATES){debug("Checking item[%c]\n", *items);}
-//                     char *current_set_candidate = set_candidate;
-//                     while(*current_set_candidate != '\0') {
-//                         if(DEBUG_CANDIDATES){debug("\t and set[%c]\n", *current_set_candidate);}
-//                         if(*items == *current_set_candidate) {
-//                             counter++;
-//                             if(DEBUG_CANDIDATES){debug("Counter increment, %d\n", counter);}
-//                         } else {
-//                             if(DEBUG_CANDIDATES){debug("[%c][%c] Not incrementing counter\n", *items, *current_set_candidate);}
-//                         }
-//                         if (counter == strlen(current_set_candidate)) {
-//                             if(DEBUG_CANDIDATES){debug("%c is in candidates, should increment support\n", current_set_candidate);}
-//                             current_candidate->support++;
-//                             return 1;
-//                         }
-//                         current_set_candidate++;
-//                     }
-//                     items++;
-//                 }
-//                 current_candidate = current_candidate->next;
-//             }
-//             // debug("not null candidates\n");
-//             // TODO: Check if set_candidate is present in candidates
-//             if(DEBUG_CANDIDATES){debug("[is_in_candidates][END] %s is not in candidates, should create candidate\n", set_candidate);}
-//             return 0;
-//         }  
-//     } else {
-//         candidate_t *current_candidate = candidates;
-//         int candidate_counter = 0;
-//         while(current_candidate) {
-//             candidate_counter++;
-//             char *items = current_candidate->set;
-//             int counter = 0;
-
-//             while (*items != '\0') {
-//                 char *current_set_candidate = set_candidate;
-//                 while(*current_set_candidate != '\0') {
-//                     if(*items == *current_set_candidate) { counter++; }
-//                     if (counter == strlen(set_candidate)) { return 1; }
-//                     current_set_candidate++;
-//                 }
-//                 items++;
-//             }
-
-//             current_candidate = current_candidate->next;
-//         }
-//         return 0;
-//     }
-
-// }
-
 void calc_support(transaction_t *transactions, candidate_t *candidate) {
     transaction_t *current_transaction = transactions;
     int counter =0;
@@ -308,12 +240,12 @@ void apriori(transaction_t *transactions, float min_support){
     info("Starting apriori algorithm\n");
     candidate_t *prev_candidates = NULL, *candidate_head = NULL;
     candidate_head = join_step(transactions, prev_candidates, min_support);
-    // print_candidates(candidate_head);
+    print_candidates(candidate_head);
     while(candidate_head) {
         prev_candidates = candidate_head;
         candidate_head = join_step(transactions, prev_candidates, min_support);
         
-        prune_step(candidate_head, min_support);
-        // print_candidates(candidate_head);
+        // prune_step(candidate_head, min_support);
+        print_candidates(candidate_head);
     }   
 }

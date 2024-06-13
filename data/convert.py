@@ -10,7 +10,7 @@ def read_transactions(filename):
 
 # Ścieżki do plików
 # input_filename = 'transactions.txt'
-input_filename = 'retail.csv'
+input_filename = 'accidents.csv'
 output_filename = 'mushroom-out.csv'
 
 # Wywołanie funkcji
